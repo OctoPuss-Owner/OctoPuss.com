@@ -1,292 +1,920 @@
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Hiten'S Portfolio</title>
-    <link rel="shortcut icon" href="hiten.png" type="x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiten Setia | Full-Stack Developer</title>
+    <link rel="shortcut icon" href="dev.png" type="image/x-icon">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .project-card:hover .project-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .timeline-item:not(:last-child):after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 24px;
+            height: 100%;
+            width: 2px;
+            background: #334155;
+        }
+        .testimonial-card {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #4ade80;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover:after {
+            width: 100%;
+        }
+    </style>
 </head>
 
-<body class="bg-gradient-to-b from-green-500 to-green-800 text-white">
-    <!-- Sticky container for navbar and profile image -->
-    <div class="sticky top-0 z-50">
-        <!-- Navigation menu -->
-        <nav class="bg-gray-700 py-2 fixed w-full top-0 left-0 z-50 h-20">
-            <div class="container flex justify-between items-center my-5">
-                <div class="text-xl font-bold ml-40">
-                     HITEN SETIA    
-                  </div>
-                <div class="flex space-x-4">
-                    <a class="hover:bg-gray-800 text-white px-4 py-2 
-                              no-underline transition duration-300 
-                              bg-transparent hover:bg-gray-700"
-                        href="#about">About</a>
-                    <a class="hover:bg-gray-800 text-white px-4 py-2 
-                              no-underline transition duration-300 
-                              bg-transparent hover:bg-gray-700"
-                        href="#projects">Projects</a>
-                    <a class="hover:bg-gray-800 text-white px-4 py-2 
-                              no-underline transition duration-300 
-                              bg-transparent hover:bg-gray-700"
-                        href="#skills">Skills</a>
-                    <a class="hover:bg-gray-800 text-white px-4 py-2 
-                              no-underline transition duration-300 
-                              bg-transparent hover:bg-gray-700"
-                        href="contact.html ">Contact</a>
+<body class="font-poppins bg-gradient-to-br from-dark-900 to-dark-800 text-gray-200 min-h-screen">
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-dark-900 transition-opacity duration-500">
+        <div class="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-primary-500"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="fixed w-full z-40">
+        <nav class="glass-card container mx-auto px-6 py-4 rounded-full max-w-7xl mt-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold">
+                    <span class="gradient-text">Hiten</span> <span class="text-white">Setia</span>
+                </a>
+                
+                <div class="hidden lg:flex space-x-8">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#services" class="nav-link">Services</a>
+                    <a href="#portfolio" class="nav-link">Portfolio</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#experience" class="nav-link">Experience</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                
+                <div class="lg:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </nav>
-
-        <!-- Profile image
-        <div class="relative">
-            <div class="w-36 h-36 rounded-full bg-white absolute top-0 
-                        left-1/2 transform -translate-x-1/2 z-50">
-                <!-- <img alt="Hiten'S Image" 
-                     class="w-36 h-36 rounded-full border-4 border-green-600"
-                     src=
-"hiten.png" /> -->
-            <!-- </div>
-        </div> <!-- White circle for profile image -->
-    </div> --> -->
-
-    <!-- Main content -->
-    <div class="mb-16 container mx-auto pt-20">
-        <!-- About section -->
-        <section id="about"
-            class="m-20 justi-center text-center mt-20 relative 
-                   my-5 mb-16 px-4 py-4 rounded-lg shadow-md relative 
-                   overflow-hidden bg-gradient-to-b from-gray-600 to-gray-800">
-            <h2 class="text-2xl font-bold mb-4 text-center">
-                  About "Me"
-              </h2>
-            <p class="text-base">
-                  Hi, I'm "Hiten Setia", a passionate full-stack developer with a 
-                  focus on building scalable and responsive web applications. 
-                  I have extensive experience in front-end technologies 
-                  such as HTML, CSS, and JavaScript, along with expertise in 
-                  popular frameworks like React.js. On the back end, I specialize
-                in Node.js and Express.js for building robust server-side 
-                  applications. My goal is to leverage my skills and creativity 
-                  to deliver innovative solutions that meet and exceed 
-                  client expectations.
-              </p>
-            <a
-                class="inline-block mt-5 px-4 py-2 rounded-md bg-green-500 
-                       text-white hover:bg-blue-600 transition duration-300">
-                  Resume
-              </a>
-        </section>
-
-        <!-- Projects section -->
-        <section id="projects"
-            class="m-20 rounded mb-16 bg-gradient-to-b from-gray-600 
-                   to-gray-800 text-white mb-8 px-4 py-10">
-            <h2 class="text-4xl font-bold mb-10 text-center">
-                  Projects
-              </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
-                <!-- Project  -->
-                <div
-                    class="bg-gray-800 p-4 shadow rounded overflow-hidden 
-                           transition-transform duration-300 transform 
-                           scale-100 hover:scale-110">
-                    <img src=
-"travel.png"
-                        alt="Travel Website" class="w-full h-auto">
-                    <h3 class="font-bold mt-4">Travel Website</h3>
-                    <p class="text-sm leading-relaxed">
-                          A travel booking website that allows users to search for
-                        destinations, book flights, hotels, and plan their itinerary.
-                      </p>
-                </div>
-                <div
-                    class="bg-gray-800 p-4 shadow rounded overflow-hidden 
-                           transition-transform duration-300 transform 
-                           scale-100 hover:scale-110">
-                    <img src=
-"ecommers.jpg"
-                        alt="E-Commers site" class="project-image">
-                    <h3 class="font-bold mt-4"> E-commerce Website</h3>
-                    <p class="text-sm leading-relaxed">
-                         A fully functional online store that allows users to browse products, add items to a shopping cart, and complete purchases through secure payment gateways. It includes product pages, categories, and user reviews.</p>
-                </div>
-                <div
-                    class="bg-gray-800 p-4 shadow rounded overflow-hidden 
-                           transition-transform duration-300 transform 
-                           scale-100 hover:scale-110">
-                    <img src=
-"blogs.jpg"                        alt="Blog Website" class="project-image">
-                    <h3 class="font-bold mt-4">Blog Website</h3>
-                    <p class="text-sm leading-relaxed">
-                        A content-rich platform designed for regular updates in the form of articles or posts. It features a content management system, categories, tags, and a commenting system for reader interaction.</p>
-                </div>
-                <div
-                    class="bg-gray-800 p-4 shadow rounded overflow-hidden 
-                           transition-transform duration-300 transform 
-                           scale-100 hover:scale-110">
-                    <img src=
-"buisness.jpg"
-                        alt="Business Website" class="project-image">
-                    <h3 class="font-bold mt-4">Business Website</h3>
-                    <p class="text-sm leading-relaxed">
-                        A professional website for a company or business that provides information about services, products, and company values. It typically includes an about page, services page, contact page, and blog.</p>
-                </div>
-                <div
-                    class="bg-gray-800 p-4 shadow rounded overflow-hidden 
-                           transition-transform duration-300 transform 
-                           scale-100 hover:scale-110">
-                    <img src=
-"edu.jpeg"
-                        alt=" Educational Website" class="project-image">
-                    <h3 class="font-bold mt-4"> Educational Website</h3>
-                    <p class="text-sm leading-relaxed">
-                        A platform for delivering educational content, such as online courses, tutorials, or resources. It features course catalogs, user accounts, quizzes, and progress tracking.</p>
-                </div>
-                <div
-                    class="bg-gray-800 p-4 shadow rounded overflow-hidden 
-                           transition-transform duration-300 transform 
-                           scale-100 hover:scale-110">
-                    <img src=
-"news.png"
-                        alt="News Website" class="project-image">
-                    <h3 class="font-bold mt-4">News Website</h3>
-                    <p class="text-sm leading-relaxed">
-                        An online platform that provides up-to-date news, articles, and media. It features sections for different categories, real-time updates, and user interaction through comments and social sharing.</p>
-                </div>
-                <div
-                    class="bg-gray-800 p-4 shadow rounded overflow-hidden 
-                           transition-transform duration-300 transform 
-                           scale-100 hover:scale-110">
-                    <img src=
-"membership.jpg"
-                        alt=" Membership Website" class="project-image">
-                    <h3 class="font-bold mt-4"> Membership Website</h3>
-                    <p class="text-sm leading-relaxed">
-                        A website that offers exclusive content or services to registered members. It includes member login, subscription plans, and access to premium resources like tutorials, courses, or special offers.</p>
-                </div>
-                <div
-                    class="bg-gray-800 p-4 shadow rounded overflow-hidden 
-                           transition-transform duration-300 transform 
-                           scale-100 hover:scale-110">
-                    <img src=
-"real.jpg"
-                        alt="Real Estate Website" class="project-image">
-                    <h3 class="font-bold mt-4">Real Estate Website</h3>
-                    <p class="text-sm leading-relaxed">
-                        A site designed to list properties for sale or rent, with features like property search filters, detailed listings, image galleries, and contact forms for inquiries, catering to real estate agents and buyers..</p>
-                </div>
-                <div
-                    class="bg-gray-800 p-4 shadow rounded overflow-hidden 
-                           transition-transform duration-300 transform 
-                           scale-100 hover:scale-110">
-                    <img src=
-"restro.png"
-                        alt="Restaurant Website" class="project-image">
-                    <h3 class="font-bold mt-4">Restaurant Website</h3>
-                    <p class="text-sm leading-relaxed">
-                        A website for a restaurant or café, showcasing menus, location, hours of operation, and an online reservation system. It may also include options for online ordering and customer reviews.</p>
-                </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden glass-card container mx-auto px-6 py-4 mt-2 rounded-lg">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#portfolio" class="nav-link">Portfolio</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
-        </section>
+        </div>
+    </header>
 
-        <!-- Skills section -->
-        <section id="skills"
-            class="m-20 p-10 mb-16 rounded-lg shadow-md text-white relative 
-                   overflow-hidden rounded mb-16 bg-gradient-to-b 
-                   from-gray-600 to-gray-800 text-white mb-8 px-4 py-10">
-            <h2 class="text-2xl font-bold mb-4">Skills</h2>
-            <!-- Skill progress bars -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <p class="font-bold">HTML</p>
-                    <div class="bg-gray-600 h-4 w-full rounded-full">
-                        <div class="bg-green-500 h-full rounded-full w-4/5"></div>
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20">
+        <div class="container mx-auto px-6 py-20">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <h4 class="text-primary-400 mb-4">Hello, I'm</h4>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                        Hiten <span class="gradient-text">Setia</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl mb-8 text-gray-300">
+                        Full-Stack <span class="gradient-text">Web Developer</span>
+                    </h2>
+                    <p class="text-lg mb-8 leading-relaxed max-w-lg">
+                        I build exceptional digital experiences that are fast, accessible, and visually appealing. With expertise in both frontend and backend development, I create solutions that drive business growth.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="bg-gradient-to-r from-primary-500 to-primary-700 text-white px-8 py-3 rounded-full hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                            Hire Me <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="dev.png" class="border-2 border-primary-500 text-primary-400 px-8 py-3 rounded-full hover:bg-primary-500 hover:text-white transition-all duration-300">
+                            Download CV <i class="fas fa-download ml-2"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="flex mt-12 space-x-6">
+                        <a href="https://www.instagram.com/hitenxsetia/" class="text-gray-400 hover:text-primary-400 text-xl transition-colors duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
-                <div>
-                    <p class="font-bold">CSS</p>
-                    <div class="bg-gray-600 h-4 w-full rounded-full">
-                        <div class="bg-green-500 h-full rounded-full w-4/5"></div>
+                
+                <div class="lg:w-1/2 flex justify-center relative">
+                    <div class="relative">
+                        <div class="absolute -top-6 -left-6 w-full h-full border-4 border-primary-500 rounded-2xl z-0 animate-float"></div>
+                        <img src="dev.png" alt="Hiten Setia" class="relative z-10 w-80 h-80 md:w-96 md:h-96 object-cover rounded-2xl">
                     </div>
-                </div>
-                <div>
-                    <p class="font-bold">JavaScript</p>
-                    <div class="bg-gray-600 h-4 w-full rounded-full">
-                        <div class="bg-green-400 h-full rounded-full w-4/5"></div>
+                    
+                    <div class="absolute bottom-0 left-0 glass-card p-4 rounded-lg shadow-lg hidden lg:block">
+                        <div class="flex items-center">
+                            <div class="bg-primary-500 p-3 rounded-full mr-3">
+                                <i class="fas fa-medal text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold">5+ Years</h5>
+                                <p class="text-sm text-gray-400">Of Experience</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <p class="font-bold">React.js</p>
-                    <div class="bg-gray-600 h-4 w-full rounded-full">
-                        <div class="bg-green-400 h-full rounded-full w-4/5">
+                    
+                    <div class="absolute top-20 right-0 glass-card p-4 rounded-lg shadow-lg hidden lg:block">
+                        <div class="flex items-center">
+                            <div class="bg-primary-500 p-3 rounded-full mr-3">
+                                <i class="fas fa-project-diagram text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold">50+ Projects</h5>
+                                <p class="text-sm text-gray-400">Completed</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p class="font-bold">Node.js</p>
-                    <div class="bg-gray-600 h-4 w-full rounded-full">
-                        <div class="bg-green-400 h-full rounded-full w-3/5"></div>
-                    </div>
-                </div>
-                <div>
-                    <p class="font-bold">Express.js</p>
-                    <div class="bg-gray-600 h-4 w-full rounded-full">
-                        <div class="bg-green-400 h-full rounded-full" 
-                             style="width: 65%;"></div>
-                    </div>
-                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Contact section -->
-        <section id="contact"
-            class="m-20 p-10 rounded-lg shadow-md text-white relative 
-                   overflow-hidden rounded mb-16 bg-gradient-to-b 
-                   from-gray-600 to-gray-800 flex">
-            <div class="w-1/2">
-                <h2 class="mb-20 text-2xl leading-6 font-bold mb-4">
-                      Contact Me
-                  </h2>
-                <!-- Contact details -->
-                <p>Email: Hitensetia30@gmail.com</p>
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-dark-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-primary-400 mb-4">Get To Know More</h4>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">About <span class="gradient-text">Me</span></h2>
+                <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/3 mb-12 lg:mb-0 flex justify-center">
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary-500 to-blue-500 rounded-2xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 blur-md -z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Hiten Setia" class="w-64 h-64 md:w-80 md:h-80 object-cover rounded-2xl relative z-10">
+                    </div>
+                </div>
                 
-                <!-- Hire Me button -->
-                <a href="contact.html"
-                    class="inline-block px-4 my-5 py-2 rounded-md bg-green-500 
-                           text-white hover:bg-blue-600 transition duration-300">
-                      Hire Me</a>
-                <!-- Social media links -->
-                <div class="flex items-center space-x-4 mt-5">
-                    <!-- LinkedIn -->
-                    <!-- <a href="#"
-                        class="inline-block px-4 py-2 rounded-md bg-green-500 
-                               text-white hover:bg-blue-600 transition duration-300">
-                      LinkedIn</a> -->
-                    <!-- GitHub -->
-                    <!-- <a href="#"
-                        class="inline-block px-4 py-2 rounded-md bg-green-500 
-                               text-white hover:bg-blue-600 transition duration-300">
-                      GitHub</a> -->
-                    <!-- Twitter -->
-                    <a href="https://www.instagram.com/hitenxsetia/"
-                        class="inline-block px-4 py-2 rounded-md bg-green-500 
-                               text-white hover:bg-blue-600 transition duration-300">
-                      Instagram</a>
+                <div class="lg:w-2/3 lg:pl-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="glass-card p-6 rounded-xl">
+                            <i class="fas fa-user-tie text-primary-400 text-2xl mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">Experience</h3>
+                            <p class="text-gray-400">5+ years working as a Full-Stack Developer</p>
+                        </div>
+                        
+                        <div class="glass-card p-6 rounded-xl">
+                            <i class="fas fa-graduation-cap text-primary-400 text-2xl mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">Education</h3>
+                            <p class="text-gray-400">B.Sc. in Computer Science</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-lg mb-6 leading-relaxed">
+                        I'm a passionate Full-Stack Developer with expertise in building scalable and responsive web applications. My journey in web development began 5 years ago, and since then I've worked with various technologies to deliver high-quality solutions.
+                    </p>
+                    <p class="text-lg mb-8 leading-relaxed">
+                        My approach combines technical excellence with creative problem-solving. I specialize in JavaScript technologies across the whole stack (React.js, Node.js, Express.js) and have extensive experience working with databases like MongoDB and MySQL.
+                    </p>
+                    
+                    <a href="#contact" class="inline-flex items-center bg-gradient-to-r from-primary-500 to-primary-700 text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300">
+                        Let's Talk <i class="fas fa-paper-plane ml-2"></i>
+                    </a>
                 </div>
             </div>
-            <div class="w-1/2">
-                <!-- Image section -->
-                <img 
-                    src=
-"img1.jpg" 
-                    alt="Image"
-                    class="w-72 h-72 mx-auto">
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-primary-400 mb-4">What I Offer</h4>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">My <span class="gradient-text">Services</span></h2>
+                <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
             </div>
-        </section>
-    </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-xl hover:transform hover:-translate-y-2 transition-all duration-500">
+                    <div class="bg-primary-500 bg-opacity-20 text-primary-400 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-laptop-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Web Development</h3>
+                    <p class="text-gray-400 mb-4">
+                        Custom website development from scratch using modern technologies like React, Vue, and Angular for frontend, and Node.js, Express for backend.
+                    </p>
+                    <a href="#" class="text-primary-400 hover:text-primary-300 flex items-center transition-colors duration-300">
+                        Learn more <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="glass-card p-8 rounded-xl hover:transform hover:-translate-y-2 transition-all duration-500">
+                    <div class="bg-primary-500 bg-opacity-20 text-primary-400 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-mobile-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Responsive Design</h3>
+                    <p class="text-gray-400 mb-4">
+                        Creating websites that look and function perfectly on all devices, from desktop computers to mobile phones, using responsive design principles.
+                    </p>
+                    <a href="#" class="text-primary-400 hover:text-primary-300 flex items-center transition-colors duration-300">
+                        Learn more <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="glass-card p-8 rounded-xl hover:transform hover:-translate-y-2 transition-all duration-500">
+                    <div class="bg-primary-500 bg-opacity-20 text-primary-400 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">E-commerce Solutions</h3>
+                    <p class="text-gray-400 mb-4">
+                        Building secure, scalable online stores with payment gateway integration, inventory management, and admin dashboards.
+                    </p>
+                    <a href="#" class="text-primary-400 hover:text-primary-300 flex items-center transition-colors duration-300">
+                        Learn more <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="glass-card p-8 rounded-xl hover:transform hover:-translate-y-2 transition-all duration-500">
+                    <div class="bg-primary-500 bg-opacity-20 text-primary-400 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-server text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">API Development</h3>
+                    <p class="text-gray-400 mb-4">
+                        Designing and implementing RESTful APIs with proper documentation, authentication, and security measures.
+                    </p>
+                    <a href="#" class="text-primary-400 hover:text-primary-300 flex items-center transition-colors duration-300">
+                        Learn more <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="glass-card p-8 rounded-xl hover:transform hover:-translate-y-2 transition-all duration-500">
+                    <div class="bg-primary-500 bg-opacity-20 text-primary-400 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-database text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Database Design</h3>
+                    <p class="text-gray-400 mb-4">
+                        Creating efficient database schemas, optimizing queries, and ensuring data integrity for your applications.
+                    </p>
+                    <a href="#" class="text-primary-400 hover:text-primary-300 flex items-center transition-colors duration-300">
+                        Learn more <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="glass-card p-8 rounded-xl hover:transform hover:-translate-y-2 transition-all duration-500">
+                    <div class="bg-primary-500 bg-opacity-20 text-primary-400 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-search-dollar text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">SEO Optimization</h3>
+                    <p class="text-gray-400 mb-4">
+                        Implementing SEO best practices to improve your website's visibility and ranking on search engines.
+                    </p>
+                    <a href="#" class="text-primary-400 hover:text-primary-300 flex items-center transition-colors duration-300">
+                        Learn more <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-dark-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-primary-400 mb-4">My Recent Work</h4>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Portfolio</h2>
+                <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
+            </div>
+            
+            <div class="flex justify-center mb-12">
+                <div class="inline-flex rounded-full p-1 bg-dark-700">
+                    <button class="px-6 py-2 rounded-full bg-primary-500 text-white">All</button>
+                    <button class="px-6 py-2 rounded-full hover:bg-dark-600 transition-colors duration-300">Web</button>
+                    <button class="px-6 py-2 rounded-full hover:bg-dark-600 transition-colors duration-300">Mobile</button>
+                    <button class="px-6 py-2 rounded-full hover:bg-dark-600 transition-colors duration-300">Design</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card relative rounded-xl overflow-hidden group">
+                    <img src="travel.png" alt="Travel Website" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent opacity-0 flex flex-col justify-end p-6 transition-all duration-500 transform translate-y-10 group-hover:opacity-100">
+                        <h3 class="text-xl font-bold mb-2">Travel Booking Platform</h3>
+                        <p class="text-gray-300 mb-4">A comprehensive travel booking website with destination search, flight/hotel booking, and itinerary planning.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary-500 bg-opacity-20 text-primary-400 px-3 py-1 rounded-full text-sm">React</span>
+                            <span class="bg-primary-500 bg-opacity-20 text-primary-400 px-3 py-1 rounded-full text-sm">Node.js</span>
+                            <span class="bg-primary-500 bg-opacity-20 text-primary-400 px-3 py-1 rounded-full text-sm">MongoDB</span>
+                        </div>
+                        <div class="flex mt-4 space-x-4">
+                            <a href="#" class="text-white hover:text-primary-400 transition-colors duration-300">
+                                <i class="fas fa-link"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-primary-400 transition-colors duration-300">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card relative rounded-xl overflow-hidden group">
+                    <img src="ecommers.jpg" alt="E-commerce Website" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent opacity-0 flex flex-col justify-end p-6 transition-all duration-500 transform translate-y-10 group-hover:opacity-100">
+                        <h3 class="text-xl font-bold mb-2">E-commerce Store</h3>
+                        <p class="text-gray-300 mb-4">Full-featured online store with product catalog, shopping cart, secure payments, and admin dashboard.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary-500 bg-opacity-20 text-primary-400 px-3 py-1 rounded-full text-sm">Vue.js</span>
+                            <span class="bg-primary-500 bg-opacity-20 text-primary-400 px-3 py-1 rounded-full text-sm">Express</span>
+                            <span class="bg-primary-500 bg-opacity-20 text-primary-400 px-3 py-1 rounded-full text-sm">MySQL</span>
+                        </div>
+                        <div class="flex mt-4 space-x-4">
+                            <a href="#" class="text-white hover:text-primary-400 transition-colors duration-300">
+                                <i class="fas fa-link"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-primary-400 transition-colors duration-300">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card relative rounded-xl overflow-hidden group">
+                    <img src="blogs.jpg" alt="Blog Platform" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent opacity-0 flex flex-col justify-end p-6 transition-all duration-500 transform translate-y-10 group-hover:opacity-100">
+                        <h3 class="text-xl font-bold mb-2">Blog Platform</h3>
+                        <p class="text-gray-300 mb-4">Content management system with categories, tags, user authentication, and commenting system.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary-500 bg-opacity-20 text-primary-400 px-3 py-1 rounded-full text-sm">Next.js</span>
+                            <span class="bg-primary-500 bg-opacity-20 text-primary-400 px-3 py-1 rounded-full text-sm">GraphQL</span>
+                            <span class="bg-primary-500 bg-opacity-20 text-primary-400 px-3 py-1 rounded-full text-sm">MongoDB</span>
+                        </div>
+                        <div class="flex mt-4 space-x-4">
+                            <a href="#" class="text-white hover:text-primary-400 transition-colors duration-300">
+                                <i class="fas fa-link"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-primary-400 transition-colors duration-300">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center border-2 border-primary-500 text-primary-400 px-8 py-3 rounded-full hover:bg-primary-500 hover:text-white transition-all duration-300">
+                    View All Projects <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-primary-400 mb-4">What Skills I Have</h4>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">My <span class="gradient-text">Skills</span></h2>
+                <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Frontend Development</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">HTML5</span>
+                                <span class="text-primary-400">95%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">CSS3</span>
+                                <span class="text-primary-400">90%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">JavaScript</span>
+                                <span class="text-primary-400">85%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">React.js</span>
+                                <span class="text-primary-400">80%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Vue.js</span>
+                                <span class="text-primary-400">75%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Backend Development</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Node.js</span>
+                                <span class="text-primary-400">85%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Express.js</span>
+                                <span class="text-primary-400">80%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">MongoDB</span>
+                                <span class="text-primary-400">75%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">MySQL</span>
+                                <span class="text-primary-400">70%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">RESTful APIs</span>
+                                <span class="text-primary-400">85%</span>
+                            </div>
+                            <div class="w-full bg-dark-700 rounded-full h-2.5">
+                                <div class="bg-gradient-to-r from-primary-500 to-blue-500 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16">
+                <h3 class="text-xl font-bold mb-6 text-center">Other Skills</h3>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="glass-card px-6 py-3 rounded-full flex items-center">
+                        <i class="fab fa-git-alt text-primary-400 mr-2"></i>
+                        <span>Git</span>
+                    </div>
+                    <div class="glass-card px-6 py-3 rounded-full flex items-center">
+                        <i class="fab fa-docker text-primary-400 mr-2"></i>
+                        <span>Docker</span>
+                    </div>
+                    <div class="glass-card px-6 py-3 rounded-full flex items-center">
+                        <i class="fas fa-server text-primary-400 mr-2"></i>
+                        <span>AWS</span>
+                    </div>
+                    <div class="glass-card px-6 py-3 rounded-full flex items-center">
+                        <i class="fas fa-search-dollar text-primary-400 mr-2"></i>
+                        <span>SEO</span>
+                    </div>
+                    <div class="glass-card px-6 py-3 rounded-full flex items-center">
+                        <i class="fas fa-paint-brush text-primary-400 mr-2"></i>
+                        <span>UI/UX Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-dark-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-primary-400 mb-4">My Career Journey</h4>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Work <span class="gradient-text">Experience</span></h2>
+                <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-8">
+                    <!-- Experience 1 -->
+                    <div class="timeline-item relative pl-8">
+                        <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary-500 z-10"></div>
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-2">Senior Full-Stack Developer</h3>
+                            <h4 class="text-primary-400 mb-4">Tech Solutions Inc. • 2021 - Present</h4>
+                            <p class="text-gray-400">
+                                Lead a team of developers to build complex web applications. Architect and implement scalable solutions using React, Node.js, and microservices. Mentor junior developers and establish coding standards.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Experience 2 -->
+                    <div class="timeline-item relative pl-8">
+                        <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary-500 z-10"></div>
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-2">Full-Stack Developer</h3>
+                            <h4 class="text-primary-400 mb-4">Digital Creations • 2019 - 2021</h4>
+                            <p class="text-gray-400">
+                                Developed and maintained multiple client websites and web applications. Collaborated with designers to implement responsive UIs. Built RESTful APIs and integrated third-party services.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Experience 3 -->
+                    <div class="timeline-item relative pl-8">
+                        <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary-500 z-10"></div>
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-2">Junior Web Developer</h3>
+                            <h4 class="text-primary-400 mb-4">Web Masters • 2017 - 2019</h4>
+                            <p class="text-gray-400">
+                                Assisted in developing and maintaining client websites. Fixed bugs and implemented new features. Gained experience with HTML, CSS, JavaScript, and PHP.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-primary-400 mb-4">What Clients Say</h4>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Testimonials</h2>
+                <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card glass-card p-8 rounded-xl">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">John Smith</h4>
+                            <p class="text-sm text-gray-400">CEO, TechCorp</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 italic mb-6">
+                        "Hiten delivered our e-commerce platform ahead of schedule. His attention to detail and problem-solving skills are exceptional. Would definitely work with him again!"
+                    </p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card glass-card p-8 rounded-xl">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-400">Marketing Director, BrandCo</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 italic mb-6">
+                        "Working with Hiten was a pleasure. He understood our requirements perfectly and provided valuable suggestions that improved our website's performance significantly."
+                    </p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card glass-card p-8 rounded-xl">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Michael Brown</h4>
+                            <p class="text-sm text-gray-400">Founder, StartupX</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 italic mb-6">
+                        "Hiten built our MVP exactly as we envisioned. His technical expertise and communication skills made the development process smooth and efficient."
+                    </p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-dark-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-primary-400 mb-4">Get In Touch</h4>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Contact <span class="gradient-text">Me</span></h2>
+                <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-bold mb-6">Let's Talk About Your Project</h3>
+                    <p class="text-gray-400 mb-8">
+                        Have a project in mind or want to discuss potential opportunities? Feel free to reach out! I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-primary-500 p-3 rounded-full mr-4 mt-1">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Email Me</h4>
+                                <p class="text-gray-400">Hitensetia30@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-bold mb-4">Follow Me</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://www.instagram.com/hitenxsetia/" class="bg-dark-700 hover:bg-pink-600 p-3 rounded-full transition-colors duration-300">
+                                <i class="fab fa-instagram text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+                        <input type="hidden" name="access_key" value="5b2465fe-b8d3-418e-a0ff-30dff1bd9c1e">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block mb-2 font-medium">Your Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="John Doe" required>
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block mb-2 font-medium">Your Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block mb-2 font-medium">Subject</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Project Inquiry" required>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block mb-2 font-medium">Your Message</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Hello Hiten, I'd like to discuss..." required></textarea>
+                        </div>
+                        
+                        <div class="h-captcha" data-captcha="true"></div>
+                        
+                        <button type="submit" class="w-full bg-gradient-to-r from-primary-500 to-primary-700 text-white font-bold py-4 px-6 rounded-lg hover:shadow-lg transition-all duration-300">
+                            Send Message <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-bold">
+                        <span class="gradient-text">Hiten</span> <span class="text-white">Setia</span>
+                    </a>
+                    <p class="text-gray-400 mt-2">Full-Stack Web Developer</p>
+                </div>
+                
+                <div class="flex flex-col items-center md:items-end">
+                    <div class="flex space-x-6 mb-6">
+                        <a href="https://www.instagram.com/hitenxsetia/" class="text-gray-400 hover:text-primary-400 transition-colors duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-500 text-sm">&copy; 2023 Hiten Setia. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#home" id="back-to-top" class="fixed bottom-8 right-8 bg-primary-500 text-white w-12 h-12 rounded-full flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-primary-600 shadow-lg">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        const mobileLinks = document.querySelectorAll('#mobile-menu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Active nav link highlighting
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 300)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('text-primary-400');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('text-primary-400');
+                }
+            });
+        });
+
+        // Initialize hCaptcha
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            if (form) {
+                const script = document.createElement('script');
+                script.src = 'https://web3forms.com/client/script.js';
+                script.async = true;
+                script.defer = true;
+                document.body.appendChild(script);
+            }
+        });
+    </script>
 </body>
 
 </html>
-
